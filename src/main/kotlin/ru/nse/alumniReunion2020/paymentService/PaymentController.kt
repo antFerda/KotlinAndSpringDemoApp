@@ -1,6 +1,9 @@
 package ru.nse.alumniReunion2020.paymentService
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
@@ -12,17 +15,18 @@ class PaymentController {
     @Autowired
     lateinit var paymentService: PaymentService
 
+    var logger: Logger = LoggerFactory.getLogger(this.javaClass)
 
-    @PostMapping(path = arrayOf("/donate"))
-    fun handlePayment(form: Form): String {
-        println(form)
-        paymentService.makePayment(form)
-        return "200"
+    @CrossOrigin(value = ["*"])
+    @PostMapping(path = ["/donate"])
+    fun handlePayment(form: Form): PaymentResponse {
+        logger.debug("Posted form $form")
+        return paymentService.makePayment(form)
     }
 
-    @GetMapping(path = arrayOf("/donate"))
+    @GetMapping(path = ["/donate"])
     fun getCheck(): String {
-        return "Hello"
+        return "health check completed"
     }
 
 }
