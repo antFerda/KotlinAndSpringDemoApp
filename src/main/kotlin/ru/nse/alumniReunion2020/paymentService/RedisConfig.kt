@@ -1,13 +1,12 @@
 package ru.nse.alumniReunion2020.paymentService
 
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
-import redis.clients.jedis.Jedis
+import redis.clients.jedis.JedisPool
+import redis.clients.jedis.JedisPoolConfig
 import java.net.URI
-import java.util.logging.Logger
 
 
 @Configuration
@@ -18,9 +17,16 @@ class RedisConfig {
 
 
     @Bean
-    fun redisClient(): Jedis {
-        LoggerFactory.getLogger(this.javaClass).info("Redis uri $redisUriStr")
-        return Jedis(URI(redisUriStr))
+    fun redisClient(): JedisPool {
+        val poolConfig = JedisPoolConfig()
+        poolConfig.maxTotal = 10
+        poolConfig.maxIdle = 5
+        poolConfig.minIdle = 1
+        poolConfig.testOnBorrow = true
+        poolConfig.testOnReturn = true
+        poolConfig.testWhileIdle = true
+
+        return JedisPool(poolConfig, URI(redisUriStr))
     }
 
 }

@@ -22,17 +22,19 @@ class PaymentController {
         return paymentService.makePayment(form)
     }
 
-    @GetMapping(path = ["/donate"])
+    @GetMapping(path = ["/check"])
     fun getCheck(): String {
         return paymentService.getAllKeys()
     }
 
+    @CrossOrigin(value = ["*"])
     @GetMapping(path = ["/payment/{paymentId}"])
     fun getPaymentStatus(@PathVariable("paymentId") paymentId: String): PaymentStatus {
         return paymentService.getStatus(paymentId)
     }
 
-    @GetMapping(path = ["/donate/status"])
+    @CrossOrigin(value = ["*"])
+    @GetMapping(path = ["/counter"])
     fun getCounterStatus(): CounterStatus {
         return paymentService.getCounterStatus()
     }
