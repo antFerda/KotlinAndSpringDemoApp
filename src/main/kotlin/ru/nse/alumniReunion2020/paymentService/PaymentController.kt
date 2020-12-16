@@ -3,10 +3,8 @@ package ru.nse.alumniReunion2020.paymentService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import javax.websocket.server.PathParam
 
 
 @RestController
@@ -26,10 +24,18 @@ class PaymentController {
 
     @GetMapping(path = ["/donate"])
     fun getCheck(): String {
-        return "health check completed"
+        return paymentService.getAllKeys()
+    }
+
+    @GetMapping(path = ["/payment/{paymentId}"])
+    fun getPaymentStatus(@PathVariable("paymentId") paymentId: String): PaymentStatus {
+        return paymentService.getStatus(paymentId)
+    }
+
+    @GetMapping(path = ["/donate/status"])
+    fun getCounterStatus(): CounterStatus {
+        return paymentService.getCounterStatus()
     }
 
 }
 
-
-data class Form(var email: String, var amount: Int)
