@@ -36,7 +36,7 @@ data class PaymentStatus(
         val status: String,
         val paid: Boolean,
         val amount: Amount,
-        var cancellationDetails: CancellationDetails?
+        var cancellation_details: CancellationDetails
 )
 
 class CancellationDetails(
