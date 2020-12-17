@@ -1,5 +1,7 @@
 package ru.nse.alumniReunion2020.paymentService
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonInclude
 
 
 data class Form(var email: String, var amount: Int)
@@ -31,12 +33,13 @@ data class PaymentResponse(
 )
 
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class PaymentStatus(
         val id: String,
         val status: String,
         val paid: Boolean,
         val amount: Amount,
-        var cancellation_details: CancellationDetails
+        var cancellation_details: CancellationDetails?
 )
 
 class CancellationDetails(
