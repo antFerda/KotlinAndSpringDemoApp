@@ -26,7 +26,9 @@ class RedisConfig {
         poolConfig.testOnReturn = true
         poolConfig.testWhileIdle = true
 
-        return JedisPool(poolConfig, URI(redisUriStr))
+        val redisURI = URI(System.getenv("REDIS_TLS_URL"))
+
+        return JedisPool(poolConfig, redisURI)
     }
 
 }
