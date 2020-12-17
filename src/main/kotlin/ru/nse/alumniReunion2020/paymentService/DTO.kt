@@ -41,7 +41,7 @@ data class PaymentStatus(
 
 class CancellationDetails(
         val party: String,
-        private val reason: String
+        val reason: String
 ) {
     val detailedReason = details[reason]
 }
